@@ -10,6 +10,7 @@ set backspace=indent,eol,start
 set list
 set listchars=trail:⋅,nbsp:⋅
 set hidden
+set timeoutlen=1000 ttimeoutlen=10
 
 " Cmd Line Tab Completion
 set wildmode=list:longest   "make cmdline tab completion similar to bash
