@@ -23,7 +23,7 @@ set timeoutlen=1000 ttimeoutlen=10
 set cursorline
 set cmdheight=1
 set switchbuf=useopen
-set winwidth=79
+set winwidth=100
 set shell=bash
 let g:sh_noisk=1
 
