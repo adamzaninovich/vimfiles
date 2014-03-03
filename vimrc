@@ -72,6 +72,10 @@ let g:bufferline_echo = 0
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MISC KEY MAPS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" no-op fucking Q
+nmap Q <nop>
+
 " remove search hl
 map <silent> <leader>l :nohlsearch<cr>
 " fix whitespace
