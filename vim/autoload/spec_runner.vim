@@ -38,7 +38,9 @@ function! spec_runner#run_file(...)
     let command_suffix = a:1
   else
     let command_suffix = ""
-    unlet s:line
+    if exists("s:line")
+      unlet s:line
+    endif
   endif
 
   " Run the tests for the previously-marked file.
