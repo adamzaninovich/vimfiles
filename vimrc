@@ -97,3 +97,15 @@ map <leader>f :call spec_runner#run_file()<cr>
 map <leader>T :call spec_runner#run('spec')<cr>
 " Repeat whatever was last run
 map <leader>r :call spec_runner#repeat()<cr>
+
+"""""""""""""""""""""""""
+" Flashing a Spark Core "
+"""""""""""""""""""""""""
+
+function! FlashSparkCore()
+  execute("w")
+  execute("!curl -X PUT -F file=@" . expand("%p") . " https://api.spark.io/v1/devices/48ff6e065067555031182387?access_token=8d3859cff1650c6a28dbfb8d2eea17070aff07c6")
+endfunction
+map <leader>fff :call FlashSparkCore() <cr>
+command! FlashSparkCore call FlashSparkCore()
+
