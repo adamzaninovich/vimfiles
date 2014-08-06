@@ -17,6 +17,7 @@ Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'adamzaninovich/vim-spec_runner'
+Plugin 'rking/ag.vim'
 
 call vundle#end()
 filetype plugin indent on
