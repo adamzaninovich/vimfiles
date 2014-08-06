@@ -9,13 +9,13 @@ set runtimepath+=~/.vim/bundle/vundle
 call vundle#begin()
 
 Plugin 'gmarik/vundle'
-Plugin 'kien/ctrlp.vim'
-Plugin 'mattn/emmet-vim'
-Plugin 'bling/vim-airline'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'tpope/vim-fugitive'
-Plugin 'jnwhiteh/vim-golang'
+Plugin 'altercation/vim-colors-solarized'
 Plugin 'tpope/vim-rails'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'kien/ctrlp.vim'
+Plugin 'bling/vim-airline'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tomtom/tcomment_vim'
 Plugin 'adamzaninovich/vim-spec_runner'
 
 call vundle#end()
@@ -27,9 +27,6 @@ filetype plugin indent on
 set hidden
 set history=10000
 filetype off
-filetype plugin indent off
-set runtimepath+=$GOROOT/misc/vim
-filetype plugin indent on
 syntax on
 set nowrap
 set relativenumber
