@@ -11,6 +11,7 @@ call vundle#begin()
 Plugin 'gmarik/vundle'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-surround'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'kien/ctrlp.vim'
 Plugin 'bling/vim-airline'
@@ -18,6 +19,11 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'adamzaninovich/vim-spec_runner'
 Plugin 'rking/ag.vim'
+Plugin 'mattn/emmet-vim'
+" Clojure
+Plugin 'guns/vim-clojure-static'
+Plugin 'tpope/vim-fireplace'
+Plugin 'kien/rainbow_parentheses.vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -38,7 +44,7 @@ set timeoutlen=1000 ttimeoutlen=10
 set cursorline
 set cmdheight=1
 set switchbuf=useopen
-set winwidth=100
+set winwidth=80
 set shell=bash
 let g:sh_noisk=1
 
@@ -68,10 +74,17 @@ set ignorecase smartcase
 set incsearch
 set hlsearch
 set showmatch
+set wrapscan
 
 " ColorScheme
 set background=dark
 colorscheme solarized
+
+" Change cursor in iTerm2
+if $TERM_PROGRAM =~ "iTerm"
+  let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
+  let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
+endif
 
 " Extra Customizations
 let mapleader=","
@@ -96,13 +109,21 @@ endif
 " MISC KEY MAPS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" convert stupid 18 syntax
+map ,19 :%s/:\(\w*\) \?=> \?/\1: /gci<cr>
+
+" search with Ag
+noremap <leader>a :Ag<space>
+
 " no-op fucking Q
 nmap Q <nop>
 
 " remove search hl
 map <silent> <leader>l :nohlsearch<cr>
+
 " fix whitespace
 nmap <silent> <leader>w m`:%s/\s\+$//e<cr>``:noh<cr>
+
 " easy buffer switching
 nnoremap <leader><leader> <c-^>
 
@@ -131,4 +152,6 @@ function! FlashSparkCore()
 endfunction
 " map <leader>fff :call FlashSparkCore() <cr>
 command! FlashSparkCore call FlashSparkCore()
+
+command! Reload execute("source ~/.vimrc")
 
