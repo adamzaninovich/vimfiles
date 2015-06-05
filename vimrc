@@ -18,12 +18,15 @@ Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'adamzaninovich/vim-spec_runner'
+Plugin 'adamzaninovich/vim-exunit_runner'
 Plugin 'rking/ag.vim'
 Plugin 'mattn/emmet-vim'
+" Elixir
+Plugin 'elixir-lang/vim-elixir'
 " Clojure
-Plugin 'guns/vim-clojure-static'
-Plugin 'tpope/vim-fireplace'
-Plugin 'kien/rainbow_parentheses.vim'
+" Plugin 'guns/vim-clojure-static'
+" Plugin 'tpope/vim-fireplace'
+" Plugin 'kien/rainbow_parentheses.vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -110,7 +113,8 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " convert stupid 18 syntax
-map ,19 :%s/:\(\w*\) \?=> \?/\1: /gci<cr>
+map <leader>19 :%s/:\(\w*\) \?=> \?/\1: /gci<cr>
+map <leader>19! :%s/:\(\w*\) \?=> \?/\1: /gi<cr>
 
 " search with Ag
 noremap <leader>a :Ag<space>
@@ -133,25 +137,38 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
+" Run elixir tests with mix test
+" autocmd FileType elixir map <buffer> <leader>t :!mix test<cr>
+" autocmd FileType elixir map <buffer> <leader>f :!mix test %<cr>
+" autocmd FileType elixir map <buffer> <leader>c :!elixirc % && iex<cr>
+
 " Run Specs on this line. Repeatable outside of spec
-map <leader>t :call spec_runner#Runline()<cr>
+autocmd FileType elixir map <buffer> <leader>t :call exunit_runner#Runline()<cr>
 " Run the current spec file. Repeatable outside of spec
-map <leader>f :call spec_runner#Runfile()<cr>
+autocmd FileType elixir map <buffer> <leader>f :call exunit_runner#Runfile()<cr>
 " Run the entire suite of specs
-map <leader>T :call spec_runner#Run('spec')<cr>
+autocmd FileType elixir map <buffer> <leader>T :call exunit_runner#Run('spec')<cr>
 " Repeat whatever was last run
-map <leader>r :call spec_runner#Repeat()<cr>
+autocmd FileType elixir map <buffer> <leader>r :call exunit_runner#Repeat()<cr>
+
+" Run Specs on this line. Repeatable outside of spec
+autocmd FileType ruby map <buffer> <leader>t :call spec_runner#Runline()<cr>
+" Run the current spec file. Repeatable outside of spec
+autocmd FileType ruby map <buffer> <leader>f :call spec_runner#Runfile()<cr>
+" Run the entire suite of specs
+autocmd FileType ruby map <buffer> <leader>T :call spec_runner#Run('spec')<cr>
+" Repeat whatever was last run
+autocmd FileType ruby map <buffer> <leader>r :call spec_runner#Repeat()<cr>
 
 """""""""""""""""""""""""
 " Flashing a Spark Core "
 """""""""""""""""""""""""
 
-function! FlashSparkCore()
-  execute("w")
-  execute("!curl -X PUT -F file=@" . expand("%p") . " https://api.spark.io/v1/devices/48ff6e065067555031182387?access_token=8d3859cff1650c6a28dbfb8d2eea17070aff07c6")
-endfunction
+" function! FlashSparkCore()
+"   execute("w")
+"   execute("!curl -X PUT -F file=@" . expand("%p") . " https://api.spark.io/v1/devices/48ff6e065067555031182387?access_token=8d3859cff1650c6a28dbfb8d2eea17070aff07c6")
+" endfunction
 " map <leader>fff :call FlashSparkCore() <cr>
-command! FlashSparkCore call FlashSparkCore()
+" command! FlashSparkCore call FlashSparkCore()
 
 command! Reload execute("source ~/.vimrc")
-
