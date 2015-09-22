@@ -1,0 +1,110 @@
+" This is Adam Zaninovich's vimrc file.
+
+set nocompatible
+filetype plugin indent on
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" BASIC EDITING CONFIGURATION
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set hidden
+set history=10000
+filetype off
+syntax on
+set nowrap
+set relativenumber
+set backspace=indent,eol,start
+set list
+set listchars=trail:⋅,nbsp:⋅
+set timeoutlen=1000 ttimeoutlen=10
+set cursorline
+set cmdheight=1
+set switchbuf=useopen
+set winwidth=80
+set shell=bash
+let g:sh_noisk=1
+
+" Store temporary files in a central spot
+set backup
+set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+
+" Indentation Settings
+set expandtab
+set tabstop=2 shiftwidth=2 softtabstop=2
+set autoindent
+
+" Cmd Line Tab Completion
+set wildmode=longest,list
+set wildmenu
+set wildignore=*.o,*.obj,*~
+
+" Search Settings
+set ignorecase smartcase
+set incsearch
+set hlsearch
+set showmatch
+set wrapscan
+
+" Extra Customizations
+let mapleader=","
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" MISC KEY MAPS
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" no-op fucking Q
+nmap Q <nop>
+
+" fix whitespace
+nmap <silent> <leader>w m`:%s/\s\+$//e<cr>``:noh<cr>
+
+" easy buffer switching
+nnoremap <leader><leader> <c-5>
+nnoremap <c-p> <c-5>
+
+" Move around splits with <c-hjkl>
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+
+
+" ~/.xvimrc - Read by the XVim plugin for Xcode.
+" General settings
+" set clipboard=unnamed
+" set relativenumber
+" set ignorecase
+" set smartcase
+" set nowrap
+" set wrapscan
+" set laststatus=0
+"
+" " Mappings {{{1
+" " Vim Mappings {{{2
+" nmap Y y$
+" nmap S i<CR><ESC>^m`gk:s/ +$//<CR>``
+
+" Windows
+nmap <C-h> <C-w>h
+nmap <C-j> <C-w>j
+nmap <C-k> <C-w>k
+nmap <C-l> <C-w>l
+
+" Xcode Mappings
+nmap gcc :xccmd commentAndUncommentCurrentLines<CR>
+vmap gc :xccmd commentAndUncommentCurrentLines<CR>
+
+" " Navigation
+" nmap <space>f :xcmenucmd Open Quickly...<CR>
+" nmap <space>n :nissue<CR>
+" nmap <space>p :pissue<CR>
+"
+" " Show
+" nmap <space>F :xccmd showInFinder<CR>
+" nmap <space>D :xccmd showDeveloperDocumentation<CR>
+" nmap <space>d :xcmenucmd Quick Help for Selected Item<CR>
+
+" Toggle Toolbars
+nmap <space>h :xccmd toggleNavigatorsVisibility<CR>
+nmap <space>j :xccmd toggleDebuggerVisibility<CR>
+nmap <space>l :xccmd toggleUtilitiesVisibility<CR>

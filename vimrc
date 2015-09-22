@@ -5,15 +5,16 @@ autocmd!
 " Enable Vundle
 set nocompatible
 filetype off
-set runtimepath+=~/.vim/bundle/vundle
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-Plugin 'gmarik/vundle'
+Plugin 'gmarik/Vundle.vim'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-surround'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'kien/ctrlp.vim'
+Plugin 'd11wtq/ctrlp_bdelete.vim'
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tomtom/tcomment_vim'
@@ -21,12 +22,17 @@ Plugin 'adamzaninovich/vim-spec_runner'
 Plugin 'adamzaninovich/vim-exunit_runner'
 Plugin 'rking/ag.vim'
 Plugin 'mattn/emmet-vim'
+Plugin 'terryma/vim-multiple-cursors'
 " Elixir
 Plugin 'elixir-lang/vim-elixir'
+" Swift
+Plugin 'keith/swift.vim'
 " Clojure
 " Plugin 'guns/vim-clojure-static'
 " Plugin 'tpope/vim-fireplace'
 " Plugin 'kien/rainbow_parentheses.vim'
+" GNU Smalltalk
+Plugin 'vim-scripts/st.vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -47,7 +53,7 @@ set timeoutlen=1000 ttimeoutlen=10
 set cursorline
 set cmdheight=1
 set switchbuf=useopen
-set winwidth=80
+set winwidth=100
 set shell=bash
 let g:sh_noisk=1
 
@@ -79,6 +85,9 @@ set hlsearch
 set showmatch
 set wrapscan
 
+" Path
+set path+=**
+
 " ColorScheme
 set background=dark
 colorscheme solarized
@@ -93,6 +102,7 @@ endif
 let mapleader=","
 
 " Plugin Customizations
+
 "" AirLine
 set laststatus=2
 set showcmd
@@ -100,6 +110,7 @@ set noshowmode
 let g:airline_powerline_fonts = 1
 let g:bufferline_echo = 0
 
+"" CtrlP
 if executable('ag')
   " Use Ag over Grep
   set grepprg=ag\ --nogroup\ --nocolor
@@ -108,9 +119,16 @@ if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
 
+call ctrlp_bdelete#init()
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MISC KEY MAPS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+nmap <leader>l 0wilet(:f=hvlc) {A }
+
+" CtrlP buffer
+nnoremap <leader>b :CtrlPBuffer<cr>
 
 " convert stupid 18 syntax
 map <leader>19 :%s/:\(\w*\) \?=> \?/\1: /gci<cr>
