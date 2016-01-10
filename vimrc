@@ -10,21 +10,29 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-surround'
-Plugin 'kchmck/vim-coffee-script'
 Plugin 'kien/ctrlp.vim'
 Plugin 'd11wtq/ctrlp_bdelete.vim'
-Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tomtom/tcomment_vim'
-Plugin 'adamzaninovich/vim-spec_runner'
-Plugin 'adamzaninovich/vim-exunit_runner'
 Plugin 'rking/ag.vim'
 Plugin 'mattn/emmet-vim'
 Plugin 'terryma/vim-multiple-cursors'
-" Elixir
+" Ruby and Rails
+Plugin 'adamzaninovich/vim-spec_runner'
+Plugin 'tpope/vim-rails'
+Plugin 'kchmck/vim-coffee-script'
+" Elixir and Phoenix
 Plugin 'elixir-lang/vim-elixir'
+Plugin 'adamzaninovich/vim-exunit_runner'
+Plugin 'avdgaag/vim-phoenix'
+" Javascript
+Plugin 'elzr/vim-json'
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'mxw/vim-jsx'
+Plugin 'othree/javascript-libraries-syntax.vim'
+Plugin 'pangloss/vim-javascript'
+Plugin 'mtscout6/vim-cjsx'
 " Swift
 Plugin 'keith/swift.vim'
 " Clojure
@@ -33,6 +41,36 @@ Plugin 'keith/swift.vim'
 " Plugin 'kien/rainbow_parentheses.vim'
 " GNU Smalltalk
 Plugin 'vim-scripts/st.vim'
+""""""" Markdown
+" Use fenced code blocks in markdown
+Plugin 'jtratner/vim-flavored-markdown'
+  let g:markdown_fenced_languages=['ruby', 'javascript', 'elixir', 'clojure', 'sh', 'html', 'sass', 'scss', 'haml', 'erlang']
+" Markdown is now included in vim, but by default .md is read as Modula-2
+" files.  This fixes that, because I don't ever edit Modula-2 files :)
+autocmd BufNewFile,BufReadPost *.md,*.markdown set filetype=markdown
+autocmd FileType markdown set tw=80
+
+""""" UI Plugins =======================
+Plugin 'bling/vim-airline'       " UI statusbar niceties
+  set laststatus=2               " enable airline even if no splits
+  set showcmd
+  let g:airline_theme='luna'
+  let g:airline_powerline_fonts = 1
+  let g:airline#extensions#branch#enabled = 1
+  let g:airline_symbols = {}
+  let g:airline_symbols.branch = '⎇ '
+  let g:airline_symbols.paste = 'ρ'
+  let g:airline#extensions#tabline#enabled = 0 " set 1 for buffer line
+  let g:bufferline_echo = 0
+  let g:airline_mode_map = {
+        \ 'n' : 'N',
+        \ 'i' : 'I',
+        \ 'R' : 'REPLACE',
+        \ 'v' : 'VISUAL',
+        \ 'V' : 'V-LINE',
+        \ 'c' : 'CMD   ',
+        \ '': 'V-BLCK',
+        \ }
 
 call vundle#end()
 filetype plugin indent on
@@ -46,6 +84,7 @@ filetype off
 syntax on
 set nowrap
 set relativenumber
+set number
 set backspace=indent,eol,start
 set list
 set listchars=trail:⋅,nbsp:⋅
@@ -53,7 +92,7 @@ set timeoutlen=1000 ttimeoutlen=10
 set cursorline
 set cmdheight=1
 set switchbuf=useopen
-set winwidth=100
+set winwidth=80
 set shell=bash
 let g:sh_noisk=1
 
@@ -104,11 +143,10 @@ let mapleader=","
 " Plugin Customizations
 
 "" AirLine
-set laststatus=2
-set showcmd
-set noshowmode
-let g:airline_powerline_fonts = 1
-let g:bufferline_echo = 0
+" set laststatus=2
+" set showcmd
+" set noshowmode
+" let g:airline_powerline_fonts = 1
 
 "" CtrlP
 if executable('ag')
@@ -125,6 +163,7 @@ call ctrlp_bdelete#init()
 " MISC KEY MAPS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" Local variable to let
 nmap <leader>l 0wilet(:f=hvlc) {A }
 
 " CtrlP buffer
@@ -165,7 +204,7 @@ autocmd FileType elixir map <buffer> <leader>t :call exunit_runner#Runline()<cr>
 " Run the current spec file. Repeatable outside of spec
 autocmd FileType elixir map <buffer> <leader>f :call exunit_runner#Runfile()<cr>
 " Run the entire suite of specs
-autocmd FileType elixir map <buffer> <leader>T :call exunit_runner#Run('spec')<cr>
+autocmd FileType elixir map <buffer> <leader>T :call exunit_runner#Run('test')<cr>
 " Repeat whatever was last run
 autocmd FileType elixir map <buffer> <leader>r :call exunit_runner#Repeat()<cr>
 
@@ -190,3 +229,6 @@ autocmd FileType ruby map <buffer> <leader>r :call spec_runner#Repeat()<cr>
 " command! FlashSparkCore call FlashSparkCore()
 
 command! Reload execute("source ~/.vimrc")
+
+set exrc
+set secure
