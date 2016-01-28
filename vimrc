@@ -8,8 +8,14 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
+" neovim
+if has("nvim")
+  Plugin 'kassio/neoterm'
+endif
+
 Plugin 'gmarik/Vundle.vim'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'morhetz/gruvbox'
 Plugin 'tpope/vim-surround'
 Plugin 'kien/ctrlp.vim'
 Plugin 'd11wtq/ctrlp_bdelete.vim'
@@ -19,7 +25,8 @@ Plugin 'rking/ag.vim'
 Plugin 'mattn/emmet-vim'
 Plugin 'terryma/vim-multiple-cursors'
 " Ruby and Rails
-Plugin 'adamzaninovich/vim-spec_runner'
+" Plugin 'adamzaninovich/vim-spec_runner'
+Plugin 'janko-m/vim-test'
 Plugin 'tpope/vim-rails'
 Plugin 'kchmck/vim-coffee-script'
 " Elixir and Phoenix
@@ -45,10 +52,10 @@ Plugin 'vim-scripts/st.vim'
 " Use fenced code blocks in markdown
 Plugin 'jtratner/vim-flavored-markdown'
   let g:markdown_fenced_languages=['ruby', 'javascript', 'elixir', 'clojure', 'sh', 'html', 'sass', 'scss', 'haml', 'erlang']
-" Markdown is now included in vim, but by default .md is read as Modula-2
-" files.  This fixes that, because I don't ever edit Modula-2 files :)
-autocmd BufNewFile,BufReadPost *.md,*.markdown set filetype=markdown
-autocmd FileType markdown set tw=80
+  " Markdown is now included in vim, but by default .md is read as Modula-2
+  " files.  This fixes that, because I don't ever edit Modula-2 files :)
+  autocmd BufNewFile,BufReadPost *.md,*.markdown set filetype=markdown
+  autocmd FileType markdown set tw=80
 
 """"" UI Plugins =======================
 Plugin 'bling/vim-airline'       " UI statusbar niceties
@@ -170,14 +177,17 @@ nmap <leader>l 0wilet(:f=hvlc) {A }
 nnoremap <leader>b :CtrlPBuffer<cr>
 
 " convert stupid 18 syntax
-map <leader>19 :%s/:\(\w*\) \?=> \?/\1: /gci<cr>
-map <leader>19! :%s/:\(\w*\) \?=> \?/\1: /gi<cr>
+map <leader>19 :%s/:\(\w*\)\s*=>\s*/\1: /gci<cr>
+map <leader>19! :%s/:\(\w*\)\s*=>\s*/\1: /gi<cr>
 
 " search with Ag
 noremap <leader>a :Ag<space>
 
 " no-op fucking Q
 nmap Q <nop>
+
+" quit all other splits
+nmap <leader>q :only<cr>
 
 " remove search hl
 map <silent> <leader>l :nohlsearch<cr>
@@ -194,41 +204,44 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
-" Run elixir tests with mix test
-" autocmd FileType elixir map <buffer> <leader>t :!mix test<cr>
-" autocmd FileType elixir map <buffer> <leader>f :!mix test %<cr>
-" autocmd FileType elixir map <buffer> <leader>c :!elixirc % && iex<cr>
-
-" Run Specs on this line. Repeatable outside of spec
-autocmd FileType elixir map <buffer> <leader>t :call exunit_runner#Runline()<cr>
-" Run the current spec file. Repeatable outside of spec
-autocmd FileType elixir map <buffer> <leader>f :call exunit_runner#Runfile()<cr>
-" Run the entire suite of specs
-autocmd FileType elixir map <buffer> <leader>T :call exunit_runner#Run('test')<cr>
-" Repeat whatever was last run
-autocmd FileType elixir map <buffer> <leader>r :call exunit_runner#Repeat()<cr>
-
-" Run Specs on this line. Repeatable outside of spec
-autocmd FileType ruby map <buffer> <leader>t :call spec_runner#Runline()<cr>
-" Run the current spec file. Repeatable outside of spec
-autocmd FileType ruby map <buffer> <leader>f :call spec_runner#Runfile()<cr>
-" Run the entire suite of specs
-autocmd FileType ruby map <buffer> <leader>T :call spec_runner#Run('spec')<cr>
-" Repeat whatever was last run
-autocmd FileType ruby map <buffer> <leader>r :call spec_runner#Repeat()<cr>
-
-"""""""""""""""""""""""""
-" Flashing a Spark Core "
-"""""""""""""""""""""""""
-
-" function! FlashSparkCore()
-"   execute("w")
-"   execute("!curl -X PUT -F file=@" . expand("%p") . " https://api.spark.io/v1/devices/48ff6e065067555031182387?access_token=8d3859cff1650c6a28dbfb8d2eea17070aff07c6")
-" endfunction
-" map <leader>fff :call FlashSparkCore() <cr>
-" command! FlashSparkCore call FlashSparkCore()
-
-command! Reload execute("source ~/.vimrc")
+map <silent> <leader>t :TestNearest<CR>
+map <silent> <leader>f :TestFile<CR>
+map <silent> <leader>T :TestSuite<CR>
+map <silent> <leader>r :TestLast<CR>
+map <silent> <leader>g :TestVisit<CR>
 
 set exrc
 set secure
+
+" neovim config
+if has("nvim")
+  " change cursor to bar in insert mode
+  let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+
+  " fuck mouse support, what am I a vimposer?
+  set mouse-=a
+
+  " run tests with :T
+  let test#strategy="neoterm"
+
+  " vertical split instead of the default horizontal
+  let g:neoterm_position="vertical"
+
+  " pretty much essential: by default in terminal mode, you have to press ctrl-\-n to get into normal mode
+  " ain't nobody got time for that
+  tnoremap <Esc> <C-\><C-n>
+
+  " optional: make it easier to switch between terminal splits
+  " ctrl doesn't work for some reason so I use alt
+  " I think the terminal is capturing ctrl and not bubbling to vim or something
+  tnoremap <A-h> <C-\><C-n><C-w>h
+  tnoremap <A-j> <C-\><C-n><C-w>j
+  tnoremap <A-k> <C-\><C-n><C-w>k
+  tnoremap <A-l> <C-\><C-n><C-w>l
+
+  " totally optional: mirror the alt split switching in non-terminal splits
+  nnoremap <A-h> <C-w>h
+  nnoremap <A-j> <C-w>j
+  nnoremap <A-k> <C-w>k
+  nnoremap <A-l> <C-w>l
+endif
