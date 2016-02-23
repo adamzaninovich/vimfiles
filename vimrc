@@ -10,6 +10,7 @@ call vundle#begin()
 
 " neovim
 if has("nvim")
+  let $SIMPLE_PROMPT=1
   Plugin 'kassio/neoterm'
 endif
 
@@ -31,7 +32,6 @@ Plugin 'tpope/vim-rails'
 Plugin 'kchmck/vim-coffee-script'
 " Elixir and Phoenix
 Plugin 'elixir-lang/vim-elixir'
-Plugin 'adamzaninovich/vim-exunit_runner'
 Plugin 'avdgaag/vim-phoenix'
 " Javascript
 Plugin 'elzr/vim-json'
@@ -56,12 +56,16 @@ Plugin 'jtratner/vim-flavored-markdown'
   " files.  This fixes that, because I don't ever edit Modula-2 files :)
   autocmd BufNewFile,BufReadPost *.md,*.markdown set filetype=markdown
   autocmd FileType markdown set tw=80
+  " Spellcheck for markdown
+  autocmd FileType markdown set spell
+  autocmd FileType markdown set spell spelllang=en_us
+  autocmd FileType markdown set complete+=kspell
 
 """"" UI Plugins =======================
-Plugin 'bling/vim-airline'       " UI statusbar niceties
+Plugin 'vim-airline/vim-airline'       " UI statusbar niceties
   set laststatus=2               " enable airline even if no splits
   set showcmd
-  let g:airline_theme='luna'
+  let g:airline_theme='gruvbox'
   let g:airline_powerline_fonts = 1
   let g:airline#extensions#branch#enabled = 1
   let g:airline_symbols = {}
@@ -136,7 +140,7 @@ set path+=**
 
 " ColorScheme
 set background=dark
-colorscheme solarized
+colorscheme gruvbox
 
 " Change cursor in iTerm2
 if $TERM_PROGRAM =~ "iTerm"
@@ -187,7 +191,7 @@ noremap <leader>a :Ag<space>
 nmap Q <nop>
 
 " quit all other splits
-nmap <leader>q :only<cr>
+nmap <silent> <leader>q :only<cr>
 
 " remove search hl
 map <silent> <leader>l :nohlsearch<cr>
@@ -226,6 +230,8 @@ if has("nvim")
 
   " vertical split instead of the default horizontal
   let g:neoterm_position="vertical"
+
+  nnoremap <silent> <leader>c :Tclose<cr>
 
   " pretty much essential: by default in terminal mode, you have to press ctrl-\-n to get into normal mode
   " ain't nobody got time for that
