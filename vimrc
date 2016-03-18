@@ -2,91 +2,75 @@
 
 autocmd!
 
-" Enable Vundle
 set nocompatible
 filetype off
 call plug#begin('~/.vim/plugged')
 
-" neovim
+" Neovim Plugins
 if has("nvim")
-  let $SIMPLE_PROMPT=1
   Plug 'kassio/neoterm'
-  " Plug 'Shougo/deoplete.nvim'
-  " Plug 'awetzel/elixir.nvim'
+
   function! BuildComposer(info)
     if a:info.status != 'unchanged' || a:info.force
+      !brew link --force openssl
+      !export C_INCLUDE_PATH="/usr/local/opt/openssl/include"
+      !export OPENSSL_INCLUDE_DIR="/usr/local/opt/openssl/include"
+      !export DEP_OPENSSL_INCLUDE="/usr/local/opt/openssl/include"
       !cargo build --release
+      !brew unlink openssl
       UpdateRemotePlugins
     endif
   endfunction
   Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
 endif
 
-Plug 'gmarik/Vundle.vim'
-Plug 'altercation/vim-colors-solarized'
-Plug 'morhetz/gruvbox'
-Plug 'tpope/vim-vinegar'
-Plug 'tpope/vim-surround'
-Plug 'kien/ctrlp.vim'
-Plug 'd11wtq/ctrlp_bdelete.vim'
-Plug 'tpope/vim-fugitive'
-Plug 'tomtom/tcomment_vim'
-Plug 'rking/ag.vim'
-Plug 'mattn/emmet-vim'
-Plug 'terryma/vim-multiple-cursors'
-" Ruby and Rails
-" Plug 'adamzaninovich/vim-spec_runner'
+" Can't live without
 Plug 'janko-m/vim-test'
+Plug 'kien/ctrlp.vim'
+Plug 'rking/ag.vim'
+Plug 'tomtom/tcomment_vim'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-vinegar'
+
+" Extra nice
+Plug 'd11wtq/ctrlp_bdelete.vim'
+Plug 'mattn/emmet-vim'
+Plug 'morhetz/gruvbox'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-surround'
+
+" Ruby and Rails
 Plug 'tpope/vim-rails'
 Plug 'kchmck/vim-coffee-script'
+
 " Elixir and Phoenix
-Plug 'elixir-lang/vim-elixir'
-Plug 'avdgaag/vim-phoenix'
+Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
+Plug 'avdgaag/vim-phoenix', { 'for': 'elixir' }
+
 " Javascript
-Plug 'elzr/vim-json'
-Plug 'jelera/vim-javascript-syntax'
-Plug 'mxw/vim-jsx'
-Plug 'othree/javascript-libraries-syntax.vim'
-Plug 'pangloss/vim-javascript'
-Plug 'mtscout6/vim-cjsx'
+Plug 'elzr/vim-json', { 'for': 'javascript' }
+Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' }
+Plug 'mxw/vim-jsx', { 'for': 'javascript' }
+Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' }
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'mtscout6/vim-cjsx', { 'for': 'javascript' }
+
 " Swift
-Plug 'keith/swift.vim'
+Plug 'keith/swift.vim', { 'for': 'swift' }
+
 " Clojure
-" Plug 'guns/vim-clojure-static'
-" Plug 'tpope/vim-fireplace'
-" Plug 'kien/rainbow_parentheses.vim'
+Plug 'guns/vim-clojure-static', { 'for': 'clojure' }
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+Plug 'kien/rainbow_parentheses.vim', { 'for': 'clojure' }
+
 " GNU Smalltalk
-Plug 'vim-scripts/st.vim'
+Plug 'vim-scripts/st.vim', { 'for': 'smalltalk' }
+
 """"""" Markdown
-" Use fenced code blocks in markdown
-Plug 'jtratner/vim-flavored-markdown'
-  let g:markdown_fenced_languages=['ruby', 'javascript', 'elixir', 'clojure', 'sh', 'html', 'sass', 'scss', 'haml', 'erlang']
-  " Markdown is now included in vim, but by default .md is read as Modula-2
-  " files.  This fixes that, because I don't ever edit Modula-2 files :)
-  autocmd BufNewFile,BufReadPost *.md,*.markdown set filetype=markdown
-  autocmd FileType markdown set tw=80
+Plug 'jtratner/vim-flavored-markdown', { 'for': 'markdown' }
 
 """"" UI Plugins =======================
 Plug 'vim-airline/vim-airline', { 'commit': 'ce44577' }
-  set laststatus=2               " enable airline even if no splits
-  set showcmd
-  let g:airline_theme='gruvbox'
-  let g:airline_powerline_fonts = 1
-  let g:airline#extensions#branch#enabled = 1
-  let g:airline_symbols = {}
-  let g:airline_symbols.branch = '⎇ '
-  let g:airline_symbols.paste = 'ρ'
-  let g:airline#extensions#tabline#enabled = 0 " set 1 for buffer line
-  let g:bufferline_echo = 0
-  let g:airline_mode_map = {
-        \ 'n' : 'N',
-        \ 'i' : 'I',
-        \ 'R' : 'REPLACE',
-        \ 'v' : 'VISUAL',
-        \ 'V' : 'V-LINE',
-        \ 'c' : 'CMD   ',
-        \ '': 'V-BLCK',
-        \ }
 
 call plug#end()
 filetype plugin indent on
@@ -168,10 +152,25 @@ let mapleader=","
 " Plugin Customizations
 
 "" AirLine
-" set laststatus=2
-" set showcmd
-" set noshowmode
-" let g:airline_powerline_fonts = 1
+set laststatus=2               " enable airline even if no splits
+set showcmd
+let g:airline_theme='gruvbox'
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#branch#enabled = 1
+let g:airline_symbols = {}
+let g:airline_symbols.branch = '⎇ '
+let g:airline_symbols.paste = 'ρ'
+let g:airline#extensions#tabline#enabled = 0 " set 1 for buffer line
+let g:bufferline_echo = 0
+let g:airline_mode_map = {
+      \ 'n' : 'N',
+      \ 'i' : 'I',
+      \ 'R' : 'REPLACE',
+      \ 'v' : 'VISUAL',
+      \ 'V' : 'V-LINE',
+      \ 'c' : 'CMD   ',
+      \ '': 'V-BLCK',
+      \ }
 
 "" CtrlP
 if executable('ag')
@@ -183,6 +182,15 @@ if executable('ag')
 endif
 
 call ctrlp_bdelete#init()
+
+
+" Use fenced code blocks in markdown
+let g:markdown_fenced_languages=['ruby', 'javascript', 'clojure', 'sh', 'html', 'sass', 'scss', 'haml', 'erlang']
+" Markdown is now included in vim, but by default .md is read as Modula-2
+" files.  This fixes that, because I don't ever edit Modula-2 files :)
+autocmd BufNewFile,BufReadPost *.md,*.markdown set filetype=markdown
+autocmd FileType markdown set tw=80
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MISC KEY MAPS
@@ -228,11 +236,10 @@ map <silent> <leader>T :TestSuite<CR>
 map <silent> <leader>r :TestLast<CR>
 map <silent> <leader>g :TestVisit<CR>
 
-set exrc
-set secure
-
-" neovim config
+"" neovim-specific config
 if has("nvim")
+  let $SIMPLE_PROMPT=1
+
   " change cursor to bar in insert mode
   let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
@@ -268,3 +275,6 @@ if has("nvim")
   nnoremap <A-k> <C-w>k
   nnoremap <A-l> <C-w>l
 endif
+
+set exrc
+set secure

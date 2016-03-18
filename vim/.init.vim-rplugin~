@@ -1,4 +1,13 @@
 " python3 plugins
+call remote#host#RegisterPlugin('python3', '/Users/adam/.vim/plugged/vim-markdown-composer/rplugin/python3/markdown_composer.py', [
+      \ {'sync': 1, 'name': 'FileType', 'opts': {'pattern': 'markdown'}, 'type': 'autocmd'},
+      \ {'sync': 0, 'name': 'BufEnter', 'opts': {'pattern': '*.md,*.mkd,*.markdown'}, 'type': 'autocmd'},
+      \ {'sync': 0, 'name': 'ComposerOpen', 'opts': {}, 'type': 'command'},
+      \ {'sync': 0, 'name': 'ComposerPort', 'opts': {}, 'type': 'command'},
+      \ {'sync': 0, 'name': 'ComposerStart', 'opts': {}, 'type': 'command'},
+      \ {'sync': 0, 'name': 'CursorHold,CursorHoldI,CursorMoved,CursorMovedI', 'opts': {'pattern': '*.md,*.mkd,*.markdown'}, 'type': 'autocmd'},
+      \ {'sync': 1, 'name': 'ComposerUpdate', 'opts': {}, 'type': 'command'},
+     \ ])
 
 
 " python plugins
