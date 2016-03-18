@@ -5,64 +5,69 @@ autocmd!
 " Enable Vundle
 set nocompatible
 filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
 " neovim
 if has("nvim")
   let $SIMPLE_PROMPT=1
-  Plugin 'kassio/neoterm'
+  Plug 'kassio/neoterm'
+  " Plug 'Shougo/deoplete.nvim'
+  " Plug 'awetzel/elixir.nvim'
+  function! BuildComposer(info)
+    if a:info.status != 'unchanged' || a:info.force
+      !cargo build --release
+      UpdateRemotePlugins
+    endif
+  endfunction
+  Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
 endif
 
-Plugin 'gmarik/Vundle.vim'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'morhetz/gruvbox'
-Plugin 'tpope/vim-surround'
-Plugin 'kien/ctrlp.vim'
-Plugin 'd11wtq/ctrlp_bdelete.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tomtom/tcomment_vim'
-Plugin 'rking/ag.vim'
-Plugin 'mattn/emmet-vim'
-Plugin 'terryma/vim-multiple-cursors'
+Plug 'gmarik/Vundle.vim'
+Plug 'altercation/vim-colors-solarized'
+Plug 'morhetz/gruvbox'
+Plug 'tpope/vim-vinegar'
+Plug 'tpope/vim-surround'
+Plug 'kien/ctrlp.vim'
+Plug 'd11wtq/ctrlp_bdelete.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'tomtom/tcomment_vim'
+Plug 'rking/ag.vim'
+Plug 'mattn/emmet-vim'
+Plug 'terryma/vim-multiple-cursors'
 " Ruby and Rails
-" Plugin 'adamzaninovich/vim-spec_runner'
-Plugin 'janko-m/vim-test'
-Plugin 'tpope/vim-rails'
-Plugin 'kchmck/vim-coffee-script'
+" Plug 'adamzaninovich/vim-spec_runner'
+Plug 'janko-m/vim-test'
+Plug 'tpope/vim-rails'
+Plug 'kchmck/vim-coffee-script'
 " Elixir and Phoenix
-Plugin 'elixir-lang/vim-elixir'
-Plugin 'avdgaag/vim-phoenix'
+Plug 'elixir-lang/vim-elixir'
+Plug 'avdgaag/vim-phoenix'
 " Javascript
-Plugin 'elzr/vim-json'
-Plugin 'jelera/vim-javascript-syntax'
-Plugin 'mxw/vim-jsx'
-Plugin 'othree/javascript-libraries-syntax.vim'
-Plugin 'pangloss/vim-javascript'
-Plugin 'mtscout6/vim-cjsx'
+Plug 'elzr/vim-json'
+Plug 'jelera/vim-javascript-syntax'
+Plug 'mxw/vim-jsx'
+Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'mtscout6/vim-cjsx'
 " Swift
-Plugin 'keith/swift.vim'
+Plug 'keith/swift.vim'
 " Clojure
-" Plugin 'guns/vim-clojure-static'
-" Plugin 'tpope/vim-fireplace'
-" Plugin 'kien/rainbow_parentheses.vim'
+" Plug 'guns/vim-clojure-static'
+" Plug 'tpope/vim-fireplace'
+" Plug 'kien/rainbow_parentheses.vim'
 " GNU Smalltalk
-Plugin 'vim-scripts/st.vim'
+Plug 'vim-scripts/st.vim'
 """"""" Markdown
 " Use fenced code blocks in markdown
-Plugin 'jtratner/vim-flavored-markdown'
+Plug 'jtratner/vim-flavored-markdown'
   let g:markdown_fenced_languages=['ruby', 'javascript', 'elixir', 'clojure', 'sh', 'html', 'sass', 'scss', 'haml', 'erlang']
   " Markdown is now included in vim, but by default .md is read as Modula-2
   " files.  This fixes that, because I don't ever edit Modula-2 files :)
   autocmd BufNewFile,BufReadPost *.md,*.markdown set filetype=markdown
   autocmd FileType markdown set tw=80
-  " Spellcheck for markdown
-  autocmd FileType markdown set spell
-  autocmd FileType markdown set spell spelllang=en_us
-  autocmd FileType markdown set complete+=kspell
 
 """"" UI Plugins =======================
-Plugin 'vim-airline/vim-airline'       " UI statusbar niceties
+Plug 'vim-airline/vim-airline', { 'commit': 'ce44577' }
   set laststatus=2               " enable airline even if no splits
   set showcmd
   let g:airline_theme='gruvbox'
@@ -83,7 +88,7 @@ Plugin 'vim-airline/vim-airline'       " UI statusbar niceties
         \ '': 'V-BLCK',
         \ }
 
-call vundle#end()
+call plug#end()
 filetype plugin indent on
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -104,6 +109,7 @@ set cursorline
 set cmdheight=1
 set switchbuf=useopen
 set winwidth=80
+set colorcolumn=80
 set shell=bash
 let g:sh_noisk=1
 
@@ -142,6 +148,14 @@ set path+=**
 set background=dark
 colorscheme gruvbox
 
+" Spelling
+autocmd FileType markdown set spell
+autocmd FileType markdown set spell spelllang=en_us
+autocmd FileType markdown set complete+=kspell
+autocmd FileType gitcommit set spell
+autocmd FileType gitcommit set spell spelllang=en_us
+autocmd FileType gitcommit set complete+=kspell
+
 " Change cursor in iTerm2
 if $TERM_PROGRAM =~ "iTerm"
   let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
@@ -175,7 +189,7 @@ call ctrlp_bdelete#init()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Local variable to let
-nmap <leader>l 0wilet(:f=hvlc) {A }
+" nmap <leader>l 0wilet(:f=hvlc) {A }
 
 " CtrlP buffer
 nnoremap <leader>b :CtrlPBuffer<cr>
@@ -221,6 +235,9 @@ set secure
 if has("nvim")
   " change cursor to bar in insert mode
   let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+
+  " enable deoplete completion for elixir
+  " autocmd FileType elixir inoremap <silent><expr> <C-p> pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
 
   " fuck mouse support, what am I a vimposer?
   set mouse-=a
