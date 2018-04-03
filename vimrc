@@ -26,18 +26,19 @@ endif
 
 " Can't live without
 Plug 'janko-m/vim-test'
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'rking/ag.vim'
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-vinegar'
 
 " Extra nice
-Plug 'd11wtq/ctrlp_bdelete.vim'
 Plug 'mattn/emmet-vim'
 Plug 'morhetz/gruvbox'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-surround'
+Plug 'd11wtq/ctrlp_bdelete.vim'
+Plug 'lucidstack/ctrlp-mpc.vim'
 
 " Ruby and Rails
 Plug 'tpope/vim-rails'
@@ -46,6 +47,7 @@ Plug 'kchmck/vim-coffee-script'
 " Elixir and Phoenix
 Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
 Plug 'avdgaag/vim-phoenix', { 'for': 'elixir' }
+Plug 'powerman/vim-plugin-AnsiEsc' | Plug 'slashmili/alchemist.vim', { 'for': 'elixir' }
 
 " Javascript
 Plug 'elzr/vim-json', { 'for': 'javascript' }
@@ -181,6 +183,7 @@ if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
 
+let g:ctrlp_extensions = ['mpc']
 call ctrlp_bdelete#init()
 
 
@@ -195,6 +198,9 @@ autocmd FileType markdown set tw=80
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MISC KEY MAPS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Sheer awesomeness
+nnoremap <Leader>m :CtrlPMpc<CR>
 
 " Local variable to let
 " nmap <leader>l 0wilet(:f=hvlc) {A }
