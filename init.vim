@@ -7,27 +7,11 @@ filetype off
 call plug#begin('~/.vim/plugged')
 
 " Neovim Plugins
-if has("nvim")
-  Plug 'kassio/neoterm'
-
-  function! BuildComposer(info)
-    if a:info.status != 'unchanged' || a:info.force
-      !brew link --force openssl
-      !export C_INCLUDE_PATH="/usr/local/opt/openssl/include"
-      !export OPENSSL_INCLUDE_DIR="/usr/local/opt/openssl/include"
-      !export DEP_OPENSSL_INCLUDE="/usr/local/opt/openssl/include"
-      !cargo build --release
-      !brew unlink openssl
-      UpdateRemotePlugins
-    endif
-  endfunction
-  Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
-endif
 
 " Can't live without
-Plug 'janko-m/vim-test'
+" Plug 'janko-m/vim-test'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'rking/ag.vim'
+" Plug 'rking/ag.vim'
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-vinegar'
@@ -38,11 +22,11 @@ Plug 'morhetz/gruvbox'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-surround'
 Plug 'd11wtq/ctrlp_bdelete.vim'
-Plug 'lucidstack/ctrlp-mpc.vim'
+" Plug 'lucidstack/ctrlp-mpc.vim'
 
 " Ruby and Rails
-Plug 'tpope/vim-rails'
-Plug 'kchmck/vim-coffee-script'
+" Plug 'tpope/vim-rails'
+" Plug 'kchmck/vim-coffee-script'
 
 " Elixir and Phoenix
 Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
@@ -52,27 +36,28 @@ Plug 'powerman/vim-plugin-AnsiEsc' | Plug 'slashmili/alchemist.vim', { 'for': 'e
 " Javascript
 Plug 'elzr/vim-json', { 'for': 'javascript' }
 Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' }
-Plug 'mxw/vim-jsx', { 'for': 'javascript' }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'mtscout6/vim-cjsx', { 'for': 'javascript' }
+" Plug 'mxw/vim-jsx', { 'for': 'javascript' }
+" Plug 'mtscout6/vim-cjsx', { 'for': 'javascript' }
 
 " Swift
-Plug 'keith/swift.vim', { 'for': 'swift' }
+" Plug 'keith/swift.vim', { 'for': 'swift' }
 
 " Clojure
-Plug 'guns/vim-clojure-static', { 'for': 'clojure' }
-Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-Plug 'kien/rainbow_parentheses.vim', { 'for': 'clojure' }
+" Plug 'guns/vim-clojure-static', { 'for': 'clojure' }
+" Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+" Plug 'kien/rainbow_parentheses.vim', { 'for': 'clojure' }
 
 " GNU Smalltalk
-Plug 'vim-scripts/st.vim', { 'for': 'smalltalk' }
+" Plug 'vim-scripts/st.vim', { 'for': 'smalltalk' }
 
 """"""" Markdown
-Plug 'jtratner/vim-flavored-markdown', { 'for': 'markdown' }
+" Plug 'jtratner/vim-flavored-markdown', { 'for': 'markdown' }
 
 """"" UI Plugins =======================
-Plug 'vim-airline/vim-airline', { 'commit': 'ce44577' }
+" Plug 'vim-airline/vim-airline'
+Plug 'itchyny/lightline.vim'
 
 call plug#end()
 filetype plugin indent on
@@ -156,23 +141,10 @@ let mapleader=","
 "" AirLine
 set laststatus=2               " enable airline even if no splits
 set showcmd
-let g:airline_theme='gruvbox'
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#branch#enabled = 1
-let g:airline_symbols = {}
-let g:airline_symbols.branch = '⎇ '
-let g:airline_symbols.paste = 'ρ'
-let g:airline#extensions#tabline#enabled = 0 " set 1 for buffer line
-let g:bufferline_echo = 0
-let g:airline_mode_map = {
-      \ 'n' : 'N',
-      \ 'i' : 'I',
-      \ 'R' : 'REPLACE',
-      \ 'v' : 'VISUAL',
-      \ 'V' : 'V-LINE',
-      \ 'c' : 'CMD   ',
-      \ '': 'V-BLCK',
+let g:lightline = {
+      \ 'colorscheme': 'seoul256',
       \ }
+
 
 "" CtrlP
 if executable('ag')
