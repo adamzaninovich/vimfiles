@@ -1,12 +1,10 @@
-" This is Adam Zaninovich's vimrc file.
+" This is Adam Zaninovich's init.vim file.
 
 autocmd!
 
 set nocompatible
 filetype off
-call plug#begin('~/.vim/plugged')
-
-" Neovim Plugins
+call plug#begin('~/.config/nvim/plugged')
 
 " Can't live without
 " Plug 'janko-m/vim-test'
@@ -22,7 +20,6 @@ Plug 'morhetz/gruvbox'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-surround'
 Plug 'd11wtq/ctrlp_bdelete.vim'
-" Plug 'lucidstack/ctrlp-mpc.vim'
 
 " Ruby and Rails
 " Plug 'tpope/vim-rails'
@@ -52,11 +49,10 @@ Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 " GNU Smalltalk
 " Plug 'vim-scripts/st.vim', { 'for': 'smalltalk' }
 
-""""""" Markdown
+" Markdown
 " Plug 'jtratner/vim-flavored-markdown', { 'for': 'markdown' }
 
-""""" UI Plugins =======================
-" Plug 'vim-airline/vim-airline'
+" UI Plugins
 Plug 'itchyny/lightline.vim'
 
 call plug#end()
@@ -127,24 +123,17 @@ autocmd FileType gitcommit set spell
 autocmd FileType gitcommit set spell spelllang=en_us
 autocmd FileType gitcommit set complete+=kspell
 
-" Change cursor in iTerm2
-if $TERM_PROGRAM =~ "iTerm"
-  let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
-  let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
-endif
-
 " Extra Customizations
 let mapleader=","
 
 " Plugin Customizations
 
-"" AirLine
-set laststatus=2               " enable airline even if no splits
+"" Lightline
+set laststatus=2 " enable lightline even if no splits
 set showcmd
 let g:lightline = {
       \ 'colorscheme': 'seoul256',
       \ }
-
 
 "" CtrlP
 if executable('ag')
@@ -155,7 +144,6 @@ if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
 
-let g:ctrlp_extensions = ['mpc']
 call ctrlp_bdelete#init()
 
 
@@ -170,9 +158,6 @@ autocmd FileType markdown set tw=80
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MISC KEY MAPS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Sheer awesomeness
-nnoremap <Leader>m :CtrlPMpc<CR>
 
 " Local variable to let
 " nmap <leader>l 0wilet(:f=hvlc) {A }
