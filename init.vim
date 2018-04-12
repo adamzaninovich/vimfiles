@@ -7,9 +7,9 @@ filetype off
 call plug#begin('~/.config/nvim/plugged')
 
 " Can't live without
-" Plug 'janko-m/vim-test'
+Plug 'janko-m/vim-test'
 Plug 'ctrlpvim/ctrlp.vim'
-" Plug 'rking/ag.vim'
+Plug 'rking/ag.vim'
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-vinegar'
