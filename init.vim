@@ -26,7 +26,7 @@ Plug 'd11wtq/ctrlp_bdelete.vim'
 " Plug 'kchmck/vim-coffee-script'
 
 " Elixir and Phoenix
-Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
+Plug 'elixir-lang/vim-elixir'
 Plug 'avdgaag/vim-phoenix', { 'for': 'elixir' }
 Plug 'powerman/vim-plugin-AnsiEsc' | Plug 'slashmili/alchemist.vim', { 'for': 'elixir' }
 
@@ -131,9 +131,7 @@ let mapleader=","
 "" Lightline
 set laststatus=2 " enable lightline even if no splits
 set showcmd
-let g:lightline = {
-      \ 'colorscheme': 'seoul256',
-      \ }
+let g:lightline = { 'colorscheme': 'gruvbox' }
 
 "" CtrlP
 if executable('ag')
