@@ -16,7 +16,6 @@ Plug 'tpope/vim-vinegar'
 
 " Extra nice
 Plug 'mattn/emmet-vim'
-Plug 'morhetz/gruvbox'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-surround'
 Plug 'd11wtq/ctrlp_bdelete.vim'
@@ -53,6 +52,7 @@ Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 " Plug 'jtratner/vim-flavored-markdown', { 'for': 'markdown' }
 
 " UI Plugins
+Plug 'morhetz/gruvbox'
 Plug 'itchyny/lightline.vim'
 
 call plug#end()
